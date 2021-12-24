@@ -9,7 +9,6 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "dev": "APP_VARIANT=development expo start --dev-client",
-    "prev": "APP_VARIANT=preview expo start",
     "buildDevClient": "eas build --profile development --platform all"
   },
   "dependencies": {
