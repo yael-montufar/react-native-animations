@@ -8,7 +8,10 @@
       "distribution": "internal",
       "releaseChannel": "dev",
       "env": {
-        "APP_VARIANT": "development"
+        "APP_VARIANT": "development",
+        "VERSION": "1.0.0",
+        "VERSION_CODE": "2",
+        "BUILD_NUMBER": "2"
       },
       "android": {
         "buildType": "apk"
