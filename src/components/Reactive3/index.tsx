@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
@@ -30,6 +30,7 @@ export default function index() {
     <Animated.ScrollView
       pagingEnabled
       horizontal
+      bounces={false}
       style={styles.root}
       onScroll={handleScroll}
       scrollEventThrottle={16}

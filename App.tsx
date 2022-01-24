@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { Reactive1, Reactive2, Reactive3, Reactive7 } from "~components";
+import { Reactive1, Reactive2, Reactive3, Reactive7, Trimmer } from "~components";
 
 export default function App() {
   return (
@@ -8,7 +8,9 @@ export default function App() {
       <StatusBar hidden={true} />
       {/* <Reactive1 /> */}
       {/* <Reactive2 /> */}
-      <Reactive7 />
+      {/* <Reactive3 /> */}
+      {/* <Reactive7 /> */}
+      <Trimmer />
     </View>
   );
 }
@@ -16,8 +18,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
 
     backgroundColor: '#202020',
   }

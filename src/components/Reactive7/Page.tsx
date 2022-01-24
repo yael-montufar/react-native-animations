@@ -3,7 +3,7 @@ import { StyleSheet, View, useWindowDimensions, Text } from 'react-native';
 import Animated, {
   useSharedValue
 } from 'react-native-reanimated';
-import { PageProps } from './Types'
+import { PageProps } from './Type'
 
 const Page: React.FC<PageProps> = ({ title, index, reference }) => {
   const { width: screenWidth, height: screenHeight } = useWindowDimensions()
