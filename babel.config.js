@@ -10,6 +10,10 @@ module.exports = function (api) {
           alias: {
             '~assets': './src/assets',
             '~projects': './src/projects',
+
+            '~components': './src/projects/Trimmer/src/components',
+            '~hooks': './src/projects/Trimmer/src/hooks',
+            '~types': './src/projects/Trimmer/src/types',
           },
           extensions: [
             '.js',

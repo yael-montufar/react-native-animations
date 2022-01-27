@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { GripProps } from './Types';
+import { GripProps } from '~types';
 
-import GripIcon from './GripIcon'
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const Grip: React.FC<GripProps> = ({ gripWidth, color, opacity, variant }) => {
   return (
@@ -22,10 +22,6 @@ const Grip: React.FC<GripProps> = ({ gripWidth, color, opacity, variant }) => {
   );
 }
 
-export const Left = (props: any) => <Grip {...props} variant='left' />
-
-export const Right = (props: any) => <Grip {...props} variant='right' />
-
 const styles = StyleSheet.create({
   grip: {
     height: '100%',
@@ -36,3 +32,13 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
 });
+
+export default Grip
+
+const GripIcon = () => (
+  <>
+    <FontAwesome5 name="grip-vertical" size={12} color="black" />
+    <FontAwesome5 name="grip-vertical" size={12} color="black" />
+    <FontAwesome5 name="grip-vertical" size={12} color="black" />
+  </>
+)

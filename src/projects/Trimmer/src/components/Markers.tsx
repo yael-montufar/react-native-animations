@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { MarkerProps } from './Types';
+import { MarkerProps } from '~types';
 
 const Markers: React.FC<MarkerProps> = ({ duration, scrollWidth, gripWidth, color }) => {
   const MARKERS = new Array(duration + 1).fill('') || [];
@@ -21,8 +21,6 @@ const Markers: React.FC<MarkerProps> = ({ duration, scrollWidth, gripWidth, colo
               index !== 0 && { marginLeft: (scrollWidth - (61 * markerWidth) - (gripWidth * 2)) / (61 - 1) }
               :
               index !== 0 && { marginLeft: (scrollWidth - (MARKERS.length * markerWidth) - (gripWidth * 2)) / (MARKERS.length - 1) },
-            // index === 0 && { marginLeft: handleWidth },
-            // index === MARKERS.length - 1 && { marginRight: handleWidth },
           ]
           } />
         )

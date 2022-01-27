@@ -1,16 +1,16 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { TrimmerProps } from './Types';
+import { TrimmerProps } from '~types';
 
-import * as Grip from './Grip'
+import Grip from './Grip'
 
 const Trimmer: React.FC<TrimmerProps> = ({ gripWidth, width = '100%', color }) => {
   return (
     <View style={[styles.root, { width: width, borderRadius: gripWidth / 8 }]}>
-      <Grip.Left gripWidth={gripWidth} color={color} opacity={1} />
+      <Grip gripWidth={gripWidth} color={color} opacity={1} variant='left' />
       <View style={[styles.frame, { borderColor: color, borderWidth: gripWidth / 8 }]} />
       <View style={[styles.window, { backgroundColor: color, opacity: .1, borderColor: 'blue' }]} />
-      <Grip.Right gripWidth={gripWidth} color={color} opacity={1} />
+      <Grip gripWidth={gripWidth} color={color} opacity={1} variant='right' />
     </View>
   );
 }

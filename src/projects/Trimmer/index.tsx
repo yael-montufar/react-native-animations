@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedScrollHandler } from 'react-native-reanimated';
 
-import Markers from './Markers';
-import Trimmer from './Trimmer';
+import { Markers, Trimmer } from '~components';
 
 export default function index() {
   const DURATION = 70

@@ -1,5 +1,3 @@
-import { StyleProp, ViewStyle } from "react-native";
-
 export interface MarkerProps {
   duration: number,
   scrollWidth: number,
@@ -21,5 +19,4 @@ export interface TrimmerProps {
 }
 
 export interface GripIconProps {
-
 }
