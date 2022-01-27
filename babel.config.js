@@ -9,14 +9,7 @@ module.exports = function (api) {
           root: ['./'],
           alias: {
             '~assets': './src/assets',
-            '~components': './src/components',
-            '~hooks': './src/hooks',
-            '~layouts': './src/layouts',
-            '~routes': './src/routes',
-            '~screens': './src/screens',
-            '~templates': './src/templates',
-            '~tmp': './src/tmp',
-            '~utils': './src/utils',
+            '~projects': './src/projects',
           },
           extensions: [
             '.js',
