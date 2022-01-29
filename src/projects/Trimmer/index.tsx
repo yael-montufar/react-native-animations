@@ -7,8 +7,8 @@ import { Markers, Trimmer } from '~components';
 export default function index() {
   const [scrollWidth, setScrollWidth] = useState(0)
 
-  const MEDIA_DURATION = 61
-  const CLIP_DURATION = 5
+  const MEDIA_DURATION = 60
+  const CLIP_DURATION = 15
 
   const MARKER_CAP = 60
   const UNIT_MARKER_INTERVAL = 5
@@ -21,8 +21,8 @@ export default function index() {
   const TRIMMER_COLOR = '#CBFE00'
 
   const SCALE_FACTOR = MEDIA_DURATION > MARKER_CAP
-    ? (scrollWidth - (GRIP_WIDTH * 2) - 2) / MARKER_CAP
-    : (scrollWidth - (GRIP_WIDTH * 2) - 2) / MEDIA_DURATION
+    ? (scrollWidth - (GRIP_WIDTH * 2) - MARKER_WIDTH) / MARKER_CAP
+    : (scrollWidth - (GRIP_WIDTH * 2) - MARKER_WIDTH) / MEDIA_DURATION
 
   const handleScroll = useAnimatedScrollHandler((event) => {
   })
@@ -52,6 +52,7 @@ export default function index() {
           scale={SCALE_FACTOR}
           duration={CLIP_DURATION}
           gripWidth={GRIP_WIDTH}
+          markerWidth={MARKER_WIDTH}
           color={TRIMMER_COLOR}
         />
       </Animated.ScrollView>

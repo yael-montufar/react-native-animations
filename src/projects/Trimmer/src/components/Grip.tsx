@@ -2,11 +2,14 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GripProps } from '~types';
 
-import { FontAwesome5 } from '@expo/vector-icons';
+import Animated from 'react-native-reanimated';
 
-const Grip: React.FC<GripProps> = ({ gripWidth, color, opacity, variant }) => {
+import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+
+const Grip: React.FC<GripProps> = ({ gripWidth, color, opacity, variant, animatedStyle }) => {
   return (
-    <View style={[
+    <Animated.View style={[
       styles.grip,
       {
         width: gripWidth,
@@ -15,10 +18,10 @@ const Grip: React.FC<GripProps> = ({ gripWidth, color, opacity, variant }) => {
         borderTopLeftRadius: gripWidth / 8,
         borderBottomLeftRadius: gripWidth / 8
       },
-      variant === 'right' && { transform: [{ rotate: '180deg' }] }
+      animatedStyle,
     ]}>
       <GripIcon />
-    </View>
+    </Animated.View>
   );
 }
 
@@ -29,6 +32,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 
+    position: 'absolute',
+
     zIndex: 1,
   },
 });
@@ -37,8 +42,9 @@ export default Grip
 
 const GripIcon = () => (
   <>
-    <FontAwesome5 name="grip-vertical" size={12} color="black" />
-    <FontAwesome5 name="grip-vertical" size={12} color="black" />
-    <FontAwesome5 name="grip-vertical" size={12} color="black" />
+    {/* <FontAwesome5 name="grip-vertical" size={12} color="black" /> */}
+    {/* <FontAwesome5 name="grip-vertical" size={12} color="black" /> */}
+    {/* <FontAwesome5 name="grip-vertical" size={12} color="black" /> */}
+    <FontAwesome name="angle-left" size={16} color="black" />
   </>
 )

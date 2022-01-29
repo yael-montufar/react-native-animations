@@ -15,6 +15,7 @@ export interface GripProps {
   opacity: number,
 
   variant: string,
+  animatedStyle: any,
 }
 
 export interface TrimmerProps {
@@ -22,5 +23,6 @@ export interface TrimmerProps {
   scale: number,
 
   gripWidth: number,
+  markerWidth: number,
   color: string,
 }
