@@ -8,20 +8,23 @@ export default function index() {
   const [scrollWidth, setScrollWidth] = useState(0)
 
   const MEDIA_DURATION = 61
-  const CLIP_DURATION = 10
+  const CLIP_DURATION = 5
 
+  const MARKER_CAP = 60
+  const UNIT_MARKER_INTERVAL = 5
+
+  const MARKER_WIDTH = 2
   const GRIP_WIDTH = 16
 
   const MARKER_COLOR = '#858585' // #C0C0C0A0 | #202020
   const TRACK_COLOR = '#202020'
   const TRIMMER_COLOR = '#CBFE00'
 
-  const SCALE_FACTOR = MEDIA_DURATION > 60
-    ? (scrollWidth - (GRIP_WIDTH * 2) - 2) / 60
+  const SCALE_FACTOR = MEDIA_DURATION > MARKER_CAP
+    ? (scrollWidth - (GRIP_WIDTH * 2) - 2) / MARKER_CAP
     : (scrollWidth - (GRIP_WIDTH * 2) - 2) / MEDIA_DURATION
 
   const handleScroll = useAnimatedScrollHandler((event) => {
-    console.log((scrollWidth - (GRIP_WIDTH * 2) - 2) / 60)
   })
 
   return (
@@ -38,9 +41,12 @@ export default function index() {
       >
         <Markers
           duration={MEDIA_DURATION}
+          interval={UNIT_MARKER_INTERVAL}
+          cap={MARKER_CAP}
           scrollWidth={scrollWidth}
           gripWidth={GRIP_WIDTH}
           color={MARKER_COLOR}
+          markerWidth={MARKER_WIDTH}
         />
         <Trimmer
           scale={SCALE_FACTOR}
