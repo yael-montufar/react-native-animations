@@ -14,9 +14,7 @@ export interface GripProps {
 
 export interface TrimmerProps {
   gripWidth: number,
-  width: number | string,
   color: string,
-}
-
-export interface GripIconProps {
+  duration: number,
+  scale: number,
 }

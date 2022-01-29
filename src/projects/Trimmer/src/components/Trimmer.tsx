@@ -4,7 +4,9 @@ import { TrimmerProps } from '~types';
 
 import Grip from './Grip'
 
-const Trimmer: React.FC<TrimmerProps> = ({ gripWidth, width = '100%', color }) => {
+const Trimmer: React.FC<TrimmerProps> = ({ duration, scale, gripWidth, color }) => {
+  const width = (gripWidth * 2) + (duration * scale) + 2
+
   return (
     <View style={[styles.root, { width: width, borderRadius: gripWidth / 8 }]}>
       <Grip gripWidth={gripWidth} color={color} opacity={1} variant='left' />
