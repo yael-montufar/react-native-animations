@@ -19,10 +19,10 @@ export interface GripProps {
 }
 
 export interface TrimmerProps {
-  duration: number,
-  scale: number,
+  gripPosition: CalculateGripPosition
 
   gripWidth: number,
-  markerWidth: number,
   color: string,
 }
+
+export type CalculateGripPosition = (secondsMark: number, variant: 'left' | 'right') => number

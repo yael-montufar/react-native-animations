@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { CalculateGripPosition } from '~types'
+
 import Animated, { useAnimatedScrollHandler } from 'react-native-reanimated';
 
 import { Markers, Trimmer } from '~components';
@@ -7,8 +9,8 @@ import { Markers, Trimmer } from '~components';
 export default function index() {
   const [scrollWidth, setScrollWidth] = useState(0)
 
-  const MEDIA_DURATION = 60
-  const CLIP_DURATION = 15
+  const MEDIA_DURATION = 10
+  // const CLIP_DURATION = 5
 
   const MARKER_CAP = 60
   const UNIT_MARKER_INTERVAL = 5
@@ -23,6 +25,12 @@ export default function index() {
   const SCALE_FACTOR = MEDIA_DURATION > MARKER_CAP
     ? (scrollWidth - (GRIP_WIDTH * 2) - MARKER_WIDTH) / MARKER_CAP
     : (scrollWidth - (GRIP_WIDTH * 2) - MARKER_WIDTH) / MEDIA_DURATION
+
+  const handleGripPosition: CalculateGripPosition = (secondsMark, variant) => {
+    return variant === 'left'
+      ? secondsMark * SCALE_FACTOR
+      : -((GRIP_WIDTH * 2) + (secondsMark * SCALE_FACTOR) + MARKER_WIDTH) + GRIP_WIDTH
+  }
 
   const handleScroll = useAnimatedScrollHandler((event) => {
   })
@@ -49,11 +57,9 @@ export default function index() {
           markerWidth={MARKER_WIDTH}
         />
         <Trimmer
-          scale={SCALE_FACTOR}
-          duration={CLIP_DURATION}
           gripWidth={GRIP_WIDTH}
-          markerWidth={MARKER_WIDTH}
           color={TRIMMER_COLOR}
+          gripPosition={handleGripPosition}
         />
       </Animated.ScrollView>
     </View>

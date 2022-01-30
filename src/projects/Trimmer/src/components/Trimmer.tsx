@@ -1,25 +1,19 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
+import { StyleSheet } from 'react-native';
 import { TrimmerProps } from '~types';
+
+import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
 import Grip from './Grip'
 
-const Trimmer: React.FC<TrimmerProps> = ({ duration, scale, gripWidth, color, markerWidth }) => {
-  // const width = (gripWidth * 2) + (duration * scale) + 2
-  const getPosition = (duration: number, variant: string) => {
-    return variant === 'left'
-      ? duration * scale
-      : -((gripWidth * 2) + (duration * scale) + markerWidth) + gripWidth
-  }
-
+const Trimmer: React.FC<TrimmerProps> = ({ gripPosition, gripWidth, color }) => {
   const gripPositionLeft = useSharedValue(0)
   const gripPositionRight = useSharedValue(0)
 
   useEffect(() => {
-    gripPositionLeft.value = getPosition(0, 'left')
-    gripPositionRight.value = getPosition(duration, 'right')
-  }, [duration, gripWidth, scale])
+    gripPositionLeft.value = gripPosition(0, 'left')
+    gripPositionRight.value = gripPosition(0, 'right')
+  }, [])
 
   const gripStyleLeft = useAnimatedStyle(() => {
     return {
