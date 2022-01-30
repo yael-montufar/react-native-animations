@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { GripProps } from '~types';
 
 import Animated from 'react-native-reanimated';
@@ -7,7 +7,7 @@ import Animated from 'react-native-reanimated';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
-const Grip: React.FC<GripProps> = ({ gripWidth, color, opacity, variant, animatedStyle }) => {
+const Grip: React.FC<GripProps> = ({ gripWidth, color, opacity, animatedStyle }) => {
   return (
     <Animated.View style={[
       styles.grip,
@@ -42,9 +42,8 @@ export default Grip
 
 const GripIcon = () => (
   <>
-    {/* <FontAwesome5 name="grip-vertical" size={12} color="black" /> */}
-    {/* <FontAwesome5 name="grip-vertical" size={12} color="black" /> */}
-    {/* <FontAwesome5 name="grip-vertical" size={12} color="black" /> */}
+    <FontAwesome5 name="grip-vertical" size={12} color="black" />
     <FontAwesome name="angle-left" size={16} color="black" />
+    <FontAwesome5 name="grip-vertical" size={12} color="black" />
   </>
 )
