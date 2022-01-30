@@ -15,15 +15,9 @@ const Markers: React.FC<MarkerProps> = ({
   const MARKERS = new Array(duration + 1).fill('') || [];
 
   const calculateMargin = (): number => {
-    let margin
-
-    if (MARKERS.length - 1 > cap) {
-      margin = (scrollWidth - ((cap + 1) * markerWidth) - (gripWidth * 2)) / (cap)
-    } else {
-      margin = (scrollWidth - (MARKERS.length * markerWidth) - (gripWidth * 2)) / (MARKERS.length - 1)
-    }
-
-    return margin
+    return MARKERS.length - 1 > cap
+      ? (scrollWidth - ((cap + 1) * markerWidth) - (gripWidth * 2)) / (cap)
+      : (scrollWidth - (MARKERS.length * markerWidth) - (gripWidth * 2)) / (MARKERS.length - 1)
   }
 
   return (
