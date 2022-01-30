@@ -14,15 +14,19 @@ export interface GripProps {
   color: string,
   opacity: number,
 
-  variant: string,
+  gestureHandler: any,
   animatedStyle: any,
 }
 
 export interface TrimmerProps {
-  gripPosition: CalculateGripPosition
+  handleGripPosition: CalculateGripPosition
 
   gripWidth: number,
   color: string,
 }
 
 export type CalculateGripPosition = (secondsMark: number, variant: 'left' | 'right') => number
+
+export type GripGestureContext = {
+  changeX: number;
+}

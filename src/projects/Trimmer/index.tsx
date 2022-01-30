@@ -9,10 +9,10 @@ import { Markers, Trimmer } from '~components';
 export default function index() {
   const [scrollWidth, setScrollWidth] = useState(0)
 
-  const MEDIA_DURATION = 10
+  const MEDIA_DURATION = 11
   // const CLIP_DURATION = 5
 
-  const MARKER_CAP = 60
+  const MARKER_CAP = 10
   const UNIT_MARKER_INTERVAL = 5
 
   const MARKER_WIDTH = 2
@@ -59,7 +59,7 @@ export default function index() {
         <Trimmer
           gripWidth={GRIP_WIDTH}
           color={TRIMMER_COLOR}
-          gripPosition={handleGripPosition}
+          handleGripPosition={handleGripPosition}
         />
       </Animated.ScrollView>
     </View>

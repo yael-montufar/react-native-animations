@@ -1,27 +1,30 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { GripProps } from '~types';
+import { GripProps, GripGestureContext } from '~types';
 
 import Animated from 'react-native-reanimated';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
-const Grip: React.FC<GripProps> = ({ gripWidth, color, opacity, animatedStyle }) => {
+const Grip: React.FC<GripProps> = ({ gripWidth, color, opacity, gestureHandler, animatedStyle }) => {
   return (
-    <Animated.View style={[
-      styles.grip,
-      {
-        width: gripWidth,
-        backgroundColor: color,
-        opacity: opacity,
-        borderTopLeftRadius: gripWidth / 8,
-        borderBottomLeftRadius: gripWidth / 8
-      },
-      animatedStyle,
-    ]}>
-      <GripIcon />
-    </Animated.View>
+    <PanGestureHandler onGestureEvent={gestureHandler}>
+      <Animated.View style={[
+        styles.grip,
+        {
+          width: gripWidth,
+          backgroundColor: color,
+          opacity: opacity,
+          borderTopLeftRadius: gripWidth / 8,
+          borderBottomLeftRadius: gripWidth / 8
+        },
+        animatedStyle,
+      ]}>
+        <GripIcon />
+      </Animated.View>
+    </PanGestureHandler>
   );
 }
 
