@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { TrimmerProps, GripGestureContext } from '~types';
+import { ClipProps, GripGestureContext } from '~types';
 
 import {
   useAnimatedStyle,
@@ -11,7 +11,7 @@ import { PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 
 import Grip from './Grip'
 
-const Trimmer: React.FC<TrimmerProps> = ({ handleGripPosition, gripWidth, color }) => {
+const Trimmer: React.FC<ClipProps> = ({ handleGripPosition, gripWidth, color }) => {
   const gripPositionLeft = useSharedValue(0)
   const gripPositionRight = useSharedValue(0)
 

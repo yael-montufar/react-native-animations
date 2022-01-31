@@ -1,11 +1,46 @@
+import React from "react"
+
+/* ---------------------------------- ROOT ---------------------------------- */
+export interface TrimmerProps {
+  mediaDuration: number;
+  clipDuration: number;
+
+  height?: number;
+  trackColor?: string;
+
+  markerCap?: number;
+  unitMarkerInterval?: number;
+  markerWidth?: number;
+  markerColor?: string;
+
+  trimmerColor?: string;
+  gripWidth?: number;
+}
+
+/* ----------------------------- COMPONENTS ----------------------------- */
 export interface MarkerProps {
   duration: number,
   cap: number,
   interval: number,
 
-  scrollWidth: number,
+  rootWidth: number,
   gripWidth: number,
   markerWidth: number
+  color: string,
+}
+
+export interface TrackProps {
+  rootDimensions: {
+    height: number;
+    width: number;
+  },
+  children: React.ReactNode
+}
+
+export interface ClipProps {
+  handleGripPosition: CalculateGripPosition
+
+  gripWidth: number,
   color: string,
 }
 
@@ -18,15 +53,14 @@ export interface GripProps {
   animatedStyle: any,
 }
 
-export interface TrimmerProps {
-  handleGripPosition: CalculateGripPosition
-
-  gripWidth: number,
-  color: string,
-}
-
-export type CalculateGripPosition = (secondsMark: number, variant: 'left' | 'right') => number
-
+/* -------------------------------- GESTURES -------------------------------- */
 export type GripGestureContext = {
   changeX: number;
 }
+
+export type ScrollGestureContext = {
+  changeX: number;
+}
+
+/* -------------------------------- UTILITIES ------------------------------- */
+export type CalculateGripPosition = (secondsMark: number, variant: 'left' | 'right') => number

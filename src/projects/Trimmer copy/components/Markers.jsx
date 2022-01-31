@@ -1,23 +1,22 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { MarkerProps } from '~types';
 
-export default function Markers({
+const Markers = ({
   duration,
   cap,
   interval,
 
-  rootWidth,
+  trackWidth,
   gripWidth,
   markerWidth,
   color
-}: MarkerProps) {
+}) => {
   const MARKERS = new Array(duration + 1).fill('') || [];
 
-  const calculateMargin = (): number => {
+  const calculateMargin = () => {
     return MARKERS.length - 1 > cap
-      ? (rootWidth - ((cap + 1) * markerWidth) - (gripWidth * 2)) / (cap)
-      : (rootWidth - (MARKERS.length * markerWidth) - (gripWidth * 2)) / (MARKERS.length - 1)
+      ? (trackWidth - ((cap + 1) * markerWidth) - (gripWidth * 2)) / (cap)
+      : (trackWidth - (MARKERS.length * markerWidth) - (gripWidth * 2)) / (MARKERS.length - 1)
   }
 
   return (
@@ -44,10 +43,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
 
-    //TEST
-    backgroundColor: 'cyan'
+    backgroundColor: 'yellow',
   },
   marker: {
     height: '25%',
   },
 });
+
+export default Markers
