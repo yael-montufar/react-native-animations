@@ -3,32 +3,26 @@ import { StyleSheet, View } from 'react-native';
 import { MarkerProps } from '~types';
 
 export default function Markers({
-  duration,
-  cap,
-  interval,
+  gripOffset,
 
-  rootWidth,
-  gripWidth,
+  markers,
+
   markerWidth,
-  color
+  markerColor,
+
+  unitMarkerInterval,
+
+  markerGap,
 }: MarkerProps) {
-  const MARKERS = new Array(duration + 1).fill('') || [];
-
-  const calculateMargin = (): number => {
-    return MARKERS.length - 1 > cap
-      ? (rootWidth - ((cap + 1) * markerWidth) - (gripWidth * 2)) / (cap)
-      : (rootWidth - (MARKERS.length * markerWidth) - (gripWidth * 2)) / (MARKERS.length - 1)
-  }
-
   return (
-    <View style={[styles.root, { paddingHorizontal: gripWidth }]}>
-      {MARKERS.map((_, index) => {
+    <View style={[styles.root, { paddingHorizontal: gripOffset }]}>
+      {markers.map((_: any, index: number) => {
         return (
           <View key={`${index}`} style={[
             styles.marker,
-            { width: markerWidth, borderRadius: markerWidth, backgroundColor: color },
-            index % interval === 0 && { height: '50%' },
-            index !== 0 && { marginLeft: calculateMargin() },
+            { width: markerWidth, borderRadius: markerWidth, backgroundColor: markerColor },
+            index % unitMarkerInterval === 0 && { height: '50%' },
+            index !== 0 && { marginLeft: markerGap },
           ]
           } />
         )

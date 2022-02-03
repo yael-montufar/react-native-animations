@@ -19,21 +19,25 @@ export interface TrimmerProps {
 
 /* ----------------------------- COMPONENTS ----------------------------- */
 export interface MarkerProps {
-  duration: number,
-  cap: number,
-  interval: number,
+  gripOffset: number;
 
-  rootWidth: number,
-  gripWidth: number,
-  markerWidth: number
-  color: string,
+  markers: any[];
+
+  markerWidth: number;
+  markerColor: string;
+
+  unitMarkerInterval: number;
+
+  markerGap: number;
 }
 
 export interface TrackProps {
-  rootDimensions: {
-    height: number;
+  dimensions: {
+    rootHeight: number;
+    rootWidth: number;
     width: number;
   },
+
   children: React.ReactNode
 }
 

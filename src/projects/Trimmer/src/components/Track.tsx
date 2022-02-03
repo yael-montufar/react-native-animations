@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { TrackProps, ScrollGestureContext } from '~types'
 
@@ -8,6 +8,7 @@ import Animated, {
   useAnimatedStyle,
   cancelAnimation,
   withDecay,
+  useDerivedValue,
 } from 'react-native-reanimated';
 
 import {
@@ -15,19 +16,21 @@ import {
 } from 'react-native-gesture-handler';
 
 
-export default function Track({ children, rootDimensions }: TrackProps) {
+export default function Track({ children, dimensions }: TrackProps) {
   const translationX = useSharedValue(0)
 
-  // const boundedTranslationX = useDerivedValue(() => {
-  //   const lowerBound = Math.min(translationX.value, 0)
-  //   const upperBound = -(screenWidth * (PAGES.length - 1))
+  const boundedTranslationX = useDerivedValue(() => {
+    const lowerBound = Math.min(translationX.value, 0)
+    const upperBound = -(dimensions.rootWidth)
 
-  //   return Math.max(lowerBound, upperBound)
-  // })
+    return Math.max(lowerBound, upperBound)
+  })
 
-  const gestureEventHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, ScrollGestureContext>({
+  const scrollEventHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, ScrollGestureContext>({
     onStart: (event, context) => {
       context.changeX = translationX.value
+      // console.log(translationX.value)
+      console.log(dimensions.rootWidth, dimensions.width)
 
       cancelAnimation(translationX)
     },
@@ -48,11 +51,11 @@ export default function Track({ children, rootDimensions }: TrackProps) {
   })
 
   return (
-    <PanGestureHandler onGestureEvent={gestureEventHandler}>
+    <PanGestureHandler onGestureEvent={scrollEventHandler}>
       <Animated.View
         style={[
           styles.track,
-          { height: rootDimensions.height },
+          { height: dimensions.rootHeight },
           trackStyle,
         ]}
       >

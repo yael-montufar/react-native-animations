@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { TrimmerProps } from '~types';
+import { TrimmerProps, CalculateGripPosition } from '~types';
 
 import { Markers, Track } from '~components';
 
-const MEDIA_DURATION = 15
+const MEDIA_DURATION = 10
 const CLIP_DURATION = 1
 
 const ROOT_HEIGHT = 72
@@ -22,9 +22,17 @@ const GRIP_WIDTH = 16
 export default function index(props: TrimmerProps) {
   const [rootWidth, setRootWidth] = useState(0)
 
-  const SCALE_FACTOR = MEDIA_DURATION > MARKER_CAP
-    ? (rootWidth - (GRIP_WIDTH * 2) - MARKER_WIDTH) / MARKER_CAP
-    : (rootWidth - (GRIP_WIDTH * 2) - MARKER_WIDTH) / MEDIA_DURATION
+  const MARKERS = new Array(MEDIA_DURATION + 1).fill('') || [];
+
+  const MARKER_GAP = MARKERS.length - 1 > MARKER_CAP
+    ? (rootWidth - ((MARKER_CAP + 1) * MARKER_WIDTH) - (GRIP_WIDTH * 2)) / (MARKER_CAP)
+    : (rootWidth - (MARKERS.length * MARKER_WIDTH) - (GRIP_WIDTH * 2)) / (MARKERS.length - 1)
+
+  const TRACK_LENGTH = (2 * GRIP_WIDTH) + (MARKER_GAP * MEDIA_DURATION) + (2 * MARKERS.length)
+
+  // const SCALE_FACTOR = MEDIA_DURATION > MARKER_CAP
+  //   ? (rootWidth - (GRIP_WIDTH * 2) - MARKER_WIDTH) / MARKER_CAP
+  //   : (rootWidth - (GRIP_WIDTH * 2) - MARKER_WIDTH) / MEDIA_DURATION
 
   // const handleGripPosition: CalculateGripPosition = (secondsMark, variant) => {
   //   return variant === 'left'
@@ -40,15 +48,14 @@ export default function index(props: TrimmerProps) {
       ]}
       onLayout={(event) => setRootWidth(event.nativeEvent.layout.width)}
     >
-      <Track rootDimensions={{ height: ROOT_HEIGHT, width: rootWidth }}>
+      <Track dimensions={{ rootHeight: ROOT_HEIGHT, rootWidth: rootWidth, width: TRACK_LENGTH }}>
         <Markers
-          duration={MEDIA_DURATION}
-          cap={MARKER_CAP}
-          interval={UNIT_MARKER_INTERVAL}
-          rootWidth={rootWidth}
-          gripWidth={GRIP_WIDTH}
+          gripOffset={GRIP_WIDTH}
+          markers={MARKERS}
           markerWidth={MARKER_WIDTH}
-          color={MARKER_COLOR}
+          markerColor={MARKER_COLOR}
+          unitMarkerInterval={UNIT_MARKER_INTERVAL}
+          markerGap={MARKER_GAP}
         />
       </Track>
     </View>
