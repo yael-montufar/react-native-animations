@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { TrackProps, ScrollGestureContext } from '~types'
 
@@ -21,23 +21,23 @@ export default function Track({ children, dimensions }: TrackProps) {
 
   const boundedTranslationX = useDerivedValue(() => {
     const lowerBound = Math.min(translationX.value, 0)
-    const upperBound = -(dimensions.rootWidth)
+    const upperBound = dimensions.rootWidth - dimensions.width
 
     return Math.max(lowerBound, upperBound)
   })
 
   const scrollEventHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, ScrollGestureContext>({
-    onStart: (event, context) => {
-      context.changeX = translationX.value
-      // console.log(translationX.value)
-      console.log(dimensions.rootWidth, dimensions.width)
+    onStart: (_event, context) => {
+      context.changeX = boundedTranslationX.value
 
       cancelAnimation(translationX)
     },
     onActive: (event, context) => {
       translationX.value = context.changeX + event.translationX
+
+      // console.log(event.translationX)
     },
-    onEnd: (event, context) => {
+    onEnd: (event) => {
       translationX.value = withDecay({ velocity: event.velocityX })
     },
   })
@@ -45,7 +45,7 @@ export default function Track({ children, dimensions }: TrackProps) {
   const trackStyle = useAnimatedStyle(() => {
     return {
       transform: [
-        { translateX: translationX.value }
+        { translateX: boundedTranslationX.value }
       ]
     }
   })

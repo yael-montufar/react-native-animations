@@ -4,14 +4,14 @@ import { TrimmerProps, CalculateGripPosition } from '~types';
 
 import { Markers, Track } from '~components';
 
-const MEDIA_DURATION = 10
+const MEDIA_DURATION = 61
 const CLIP_DURATION = 1
 
 const ROOT_HEIGHT = 72
 const TRACK_COLOR = '#202020'
 
 
-const MARKER_CAP = 10
+const MARKER_CAP = 60
 const UNIT_MARKER_INTERVAL = 5
 const MARKER_WIDTH = 2
 const MARKER_COLOR = '#858585' // #C0C0C0A0 | #202020
