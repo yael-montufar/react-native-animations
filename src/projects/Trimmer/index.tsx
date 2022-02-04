@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TrimmerProps, CalculateGripPosition } from '~types';
 
-import { Markers, Track } from '~components';
+import { Markers, Track, LeftGrip } from '~components';
 
-const MEDIA_DURATION = 61
+const MEDIA_DURATION = 60
 const CLIP_DURATION = 1
 
 const ROOT_HEIGHT = 72
@@ -28,17 +28,17 @@ export default function index(props: TrimmerProps) {
     ? (rootWidth - ((MARKER_CAP + 1) * MARKER_WIDTH) - (GRIP_WIDTH * 2)) / (MARKER_CAP)
     : (rootWidth - (MARKERS.length * MARKER_WIDTH) - (GRIP_WIDTH * 2)) / (MARKERS.length - 1)
 
-  const TRACK_LENGTH = (2 * GRIP_WIDTH) + (MARKER_GAP * MEDIA_DURATION) + (2 * MARKERS.length)
+  const TRACK_WIDTH = (2 * GRIP_WIDTH) + (MARKER_GAP * MEDIA_DURATION) + (2 * MARKERS.length)
 
-  // const SCALE_FACTOR = MEDIA_DURATION > MARKER_CAP
-  //   ? (rootWidth - (GRIP_WIDTH * 2) - MARKER_WIDTH) / MARKER_CAP
-  //   : (rootWidth - (GRIP_WIDTH * 2) - MARKER_WIDTH) / MEDIA_DURATION
+  const SCALE_FACTOR = MEDIA_DURATION > MARKER_CAP
+    ? (rootWidth - (GRIP_WIDTH * 2) - MARKER_WIDTH) / MARKER_CAP
+    : (rootWidth - (GRIP_WIDTH * 2) - MARKER_WIDTH) / MEDIA_DURATION
 
-  // const handleGripPosition: CalculateGripPosition = (secondsMark, variant) => {
-  //   return variant === 'left'
-  //     ? secondsMark * SCALE_FACTOR
-  //     : -((GRIP_WIDTH * 2) + (secondsMark * SCALE_FACTOR) + MARKER_WIDTH) + GRIP_WIDTH
-  // }
+  const getGripPosition: CalculateGripPosition = (secondsMark, variant) => {
+    return variant === 'left'
+      ? secondsMark * SCALE_FACTOR
+      : -((GRIP_WIDTH * 2) + (secondsMark * SCALE_FACTOR) + MARKER_WIDTH) + GRIP_WIDTH
+  }
 
   return (
     <View
@@ -48,7 +48,12 @@ export default function index(props: TrimmerProps) {
       ]}
       onLayout={(event) => setRootWidth(event.nativeEvent.layout.width)}
     >
-      <Track dimensions={{ rootHeight: ROOT_HEIGHT, rootWidth: rootWidth, width: TRACK_LENGTH }}>
+      <Track dimensions={{ rootHeight: ROOT_HEIGHT, rootWidth: rootWidth, trackWidth: TRACK_WIDTH }}>
+        <LeftGrip
+          gripWidth={GRIP_WIDTH}
+          color={TRIMMER_COLOR}
+          gripPosition={getGripPosition}
+        />
         <Markers
           gripOffset={GRIP_WIDTH}
           markers={MARKERS}
@@ -58,7 +63,7 @@ export default function index(props: TrimmerProps) {
           markerGap={MARKER_GAP}
         />
       </Track>
-    </View>
+    </View >
   );
 }
 

@@ -35,10 +35,17 @@ export interface TrackProps {
   dimensions: {
     rootHeight: number;
     rootWidth: number;
-    width: number;
-  },
+    trackWidth: number;
+  }
 
-  children: React.ReactNode
+  children: React.ReactNode;
+}
+
+export interface GripProps {
+  gripWidth: number;
+  color: string;
+
+  gripPosition: CalculateGripPosition;
 }
 
 export interface ClipProps {
@@ -48,23 +55,14 @@ export interface ClipProps {
   color: string,
 }
 
-export interface GripProps {
-  gripWidth: number,
-  color: string,
-  opacity: number,
-
-  gestureHandler: any,
-  animatedStyle: any,
-}
-
 /* -------------------------------- GESTURES -------------------------------- */
-export type GripGestureContext = {
-  changeX: number;
-}
-
 export type ScrollGestureContext = {
   changeX: number;
 }
 
+export type GripGestureContext = {
+  changeX: number;
+}
+
 /* -------------------------------- UTILITIES ------------------------------- */
-export type CalculateGripPosition = (secondsMark: number, variant: 'left' | 'right') => number
+export type CalculateGripPosition = (secondsMark: number, variant: 'left' | 'right') => number;

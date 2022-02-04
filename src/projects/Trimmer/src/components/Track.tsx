@@ -21,7 +21,7 @@ export default function Track({ children, dimensions }: TrackProps) {
 
   const boundedTranslationX = useDerivedValue(() => {
     const lowerBound = Math.min(translationX.value, 0)
-    const upperBound = dimensions.rootWidth - dimensions.width
+    const upperBound = dimensions.rootWidth - dimensions.trackWidth
 
     return Math.max(lowerBound, upperBound)
   })
