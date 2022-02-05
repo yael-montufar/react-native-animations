@@ -41,11 +41,15 @@ export interface TrackProps {
   children: React.ReactNode;
 }
 
-export interface GripProps {
+export interface LeftGripProps {
   gripWidth: number;
   color: string;
 
   gripPosition: CalculateGripPosition;
+
+  dimensions: {
+    trackWidth: number;
+  }
 }
 
 export interface ClipProps {
@@ -66,3 +70,10 @@ export type GripGestureContext = {
 
 /* -------------------------------- UTILITIES ------------------------------- */
 export type CalculateGripPosition = (secondsMark: number, variant: 'left' | 'right') => number;
+
+export type Dimensions = {
+  rootHeight?: number;
+  rootWidth?: number;
+  trackHeight?: number;
+  trackWidth?: number;
+}

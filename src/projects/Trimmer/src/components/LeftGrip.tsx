@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { GripProps, GripGestureContext } from '~types';
+import { LeftGripProps, GripGestureContext } from '~types';
 
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   useAnimatedGestureHandler,
+  useDerivedValue,
 } from 'react-native-reanimated';
 import {
   PanGestureHandler,
@@ -15,31 +16,41 @@ import {
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
-const Grip: React.FC<GripProps> = ({ gripWidth, color, gripPosition }) => {
+const Grip: React.FC<LeftGripProps> = ({ gripWidth, color, gripPosition, dimensions }) => {
   const translationX = useSharedValue(0)
 
-  const gripStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        { translateX: translationX.value }
-      ]
-    }
-  }, [translationX])
+  const boundedTranslationX = useDerivedValue(() => {
+    const lowerBound = Math.max(translationX.value, 0)
+    // const upperBound = dimensions.rightOffset
+    const upperBound = dimensions.trackWidth - gripWidth
 
-  useEffect(() => {
-    translationX.value = gripPosition(0, 'left')
-  }, [gripStyle])
+    return Math.min(lowerBound, upperBound)
+  })
 
   const gripEventHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, GripGestureContext>({
     onStart: (_event, context) => {
-      context.changeX = translationX.value
+      context.changeX = boundedTranslationX.value
     },
     onActive: (event, context) => {
       translationX.value = context.changeX + event.translationX
+      console.log(boundedTranslationX.value)
     },
     onEnd: () => {
     }
   })
+
+  const gripStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateX: boundedTranslationX.value }
+      ]
+    }
+  }, [translationX])
+
+  // useEffect(() => {
+  //   translationX.value = gripPosition(0, 'left')
+  // }, [gripStyle])
+
 
   return (
     <PanGestureHandler onGestureEvent={gripEventHandler}>

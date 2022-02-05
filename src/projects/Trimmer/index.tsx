@@ -4,7 +4,7 @@ import { TrimmerProps, CalculateGripPosition } from '~types';
 
 import { Markers, Track, LeftGrip } from '~components';
 
-const MEDIA_DURATION = 60
+const MEDIA_DURATION = 90
 const CLIP_DURATION = 1
 
 const ROOT_HEIGHT = 72
@@ -53,6 +53,7 @@ export default function index(props: TrimmerProps) {
           gripWidth={GRIP_WIDTH}
           color={TRIMMER_COLOR}
           gripPosition={getGripPosition}
+          dimensions={{ trackWidth: TRACK_WIDTH }}
         />
         <Markers
           gripOffset={GRIP_WIDTH}
