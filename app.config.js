@@ -17,7 +17,7 @@ export default ({ config }) => { // passed from app.json
     android: {
       package: IS_DEV ? "com.yaelmontufar.reactnativeanimations.dev" :
         IS_PREV ? "com.yaelmontufar.reactnativeanimations.prev" : config.android.package,
-      versionCode: process.env.VERSION_CODE || "1",
+      versionCode: process.env.VERSION_CODE || 1,
     },
   }
 };
