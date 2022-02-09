@@ -3,12 +3,10 @@ import { StyleSheet } from 'react-native';
 import { TrackProps, ScrollGestureContext } from '~types'
 
 import Animated, {
-  useSharedValue,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   cancelAnimation,
   withDecay,
-  useDerivedValue,
 } from 'react-native-reanimated';
 
 import {
@@ -16,36 +14,32 @@ import {
 } from 'react-native-gesture-handler';
 
 
-export default function Track({ children, dimensions }: TrackProps) {
-  const translationX = useSharedValue(0)
-
-  const boundedTranslationX = useDerivedValue(() => {
-    const lowerBound = Math.min(translationX.value, 0)
-    const upperBound = dimensions.rootWidth - dimensions.trackWidth
-
-    return Math.max(lowerBound, upperBound)
-  })
-
+export default function Track({ children, dimensions, visibleTrackRange, scrollTranslation, boundedScrollTranslation }: TrackProps) {
   const scrollEventHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, ScrollGestureContext>({
     onStart: (_event, context) => {
-      context.changeX = boundedTranslationX.value
+      context.changeX = boundedScrollTranslation.value
 
-      cancelAnimation(translationX)
+      cancelAnimation(scrollTranslation)
     },
     onActive: (event, context) => {
-      translationX.value = context.changeX + event.translationX
+      scrollTranslation.value = context.changeX + event.translationX
 
-      // console.log(event.translationX)
+      const lowerBound = Math.abs(boundedScrollTranslation.value)
+      const upperBound = Math.abs(boundedScrollTranslation.value - dimensions.rootWidth)
+
+      visibleTrackRange.value = [lowerBound, upperBound]
+
+      console.log(visibleTrackRange.value)
     },
     onEnd: (event) => {
-      translationX.value = withDecay({ velocity: event.velocityX })
+      scrollTranslation.value = withDecay({ velocity: event.velocityX })
     },
   })
 
   const trackStyle = useAnimatedStyle(() => {
     return {
       transform: [
-        { translateX: boundedTranslationX.value }
+        { translateX: boundedScrollTranslation.value }
       ]
     }
   })

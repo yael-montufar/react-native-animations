@@ -1,4 +1,5 @@
 import React from "react"
+import Animated from "react-native-reanimated";
 
 /* ---------------------------------- ROOT ---------------------------------- */
 export interface TrimmerProps {
@@ -39,6 +40,10 @@ export interface TrackProps {
   }
 
   children: React.ReactNode;
+
+  visibleTrackRange: Animated.SharedValue<number[]>
+  scrollTranslation: Animated.SharedValue<number>
+  boundedScrollTranslation: Animated.SharedValue<number>
 }
 
 export interface LeftGripProps {
@@ -48,8 +53,12 @@ export interface LeftGripProps {
   gripPosition: CalculateGripPosition;
 
   dimensions: {
+    rootWidth: number;
     trackWidth: number;
   }
+
+  visibleTrackRange: Animated.SharedValue<number[]>
+  scrollTranslation: Animated.SharedValue<number>
 }
 
 export interface ClipProps {

@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+/* -------------------------------------------------------------------------- */
+/*                                   IMPORTS                                  */
+/* -------------------------------------------------------------------------- */
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TrimmerProps, CalculateGripPosition } from '~types';
 
 import { Markers, Track, LeftGrip } from '~components';
 
+import { useSharedValue, useDerivedValue } from 'react-native-reanimated';
+
+/* -------------------------------------------------------------------------- */
+/*                               INITIAL VALUES                               */
+/* -------------------------------------------------------------------------- */
 const MEDIA_DURATION = 90
 const CLIP_DURATION = 1
 
@@ -19,7 +27,11 @@ const MARKER_COLOR = '#858585' // #C0C0C0A0 | #202020
 const TRIMMER_COLOR = '#CBFE00'
 const GRIP_WIDTH = 16
 
+/* -------------------------------------------------------------------------- */
+/*                                   EXPORT                                   */
+/* -------------------------------------------------------------------------- */
 export default function index(props: TrimmerProps) {
+  /* -------------------------------- CONSTANTS ------------------------------- */
   const [rootWidth, setRootWidth] = useState(0)
 
   const MARKERS = new Array(MEDIA_DURATION + 1).fill('') || [];
@@ -40,6 +52,23 @@ export default function index(props: TrimmerProps) {
       : -((GRIP_WIDTH * 2) + (secondsMark * SCALE_FACTOR) + MARKER_WIDTH) + GRIP_WIDTH
   }
 
+  /* ---------------------------- ANIMATION VALUES ---------------------------- */
+  const visibleTrackRange = useSharedValue([0, 0])
+
+  useEffect(() => {
+    visibleTrackRange.value = [0, rootWidth]
+  }, [rootWidth])
+
+  const scrollTranslation = useSharedValue(0)
+
+  const boundedScrollTranslation = useDerivedValue(() => {
+    const lowerBound = Math.min(scrollTranslation.value, 0)
+    const upperBound = rootWidth - TRACK_WIDTH
+
+    return Math.max(lowerBound, upperBound)
+  })
+
+  /* --------------------------------- RENDER --------------------------------- */
   return (
     <View
       style={[
@@ -48,12 +77,22 @@ export default function index(props: TrimmerProps) {
       ]}
       onLayout={(event) => setRootWidth(event.nativeEvent.layout.width)}
     >
-      <Track dimensions={{ rootHeight: ROOT_HEIGHT, rootWidth: rootWidth, trackWidth: TRACK_WIDTH }}>
+      <Track
+        dimensions={{ rootHeight: ROOT_HEIGHT, rootWidth: rootWidth, trackWidth: TRACK_WIDTH }}
+
+        visibleTrackRange={visibleTrackRange}
+
+        scrollTranslation={scrollTranslation}
+        boundedScrollTranslation={boundedScrollTranslation}
+      >
         <LeftGrip
           gripWidth={GRIP_WIDTH}
           color={TRIMMER_COLOR}
           gripPosition={getGripPosition}
-          dimensions={{ trackWidth: TRACK_WIDTH }}
+          dimensions={{ rootWidth: rootWidth, trackWidth: TRACK_WIDTH }}
+
+          visibleTrackRange={visibleTrackRange}
+          scrollTranslation={boundedScrollTranslation}
         />
         <Markers
           gripOffset={GRIP_WIDTH}
@@ -68,6 +107,9 @@ export default function index(props: TrimmerProps) {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                 BASE STYLES                                */
+/* -------------------------------------------------------------------------- */
 const styles = StyleSheet.create({
   root: {
     width: '100%',

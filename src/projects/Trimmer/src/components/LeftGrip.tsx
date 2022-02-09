@@ -7,6 +7,10 @@ import Animated, {
   useAnimatedStyle,
   useAnimatedGestureHandler,
   useDerivedValue,
+  withSpring,
+  withTiming,
+  withRepeat,
+  withSequence
 } from 'react-native-reanimated';
 import {
   PanGestureHandler,
@@ -16,8 +20,9 @@ import {
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
-const Grip: React.FC<LeftGripProps> = ({ gripWidth, color, gripPosition, dimensions }) => {
+const Grip: React.FC<LeftGripProps> = ({ gripWidth, color, gripPosition, dimensions, visibleTrackRange, scrollTranslation }) => {
   const translationX = useSharedValue(0)
+  const context = useSharedValue({})
 
   const boundedTranslationX = useDerivedValue(() => {
     const lowerBound = Math.max(translationX.value, 0)
@@ -33,7 +38,21 @@ const Grip: React.FC<LeftGripProps> = ({ gripWidth, color, gripPosition, dimensi
     },
     onActive: (event, context) => {
       translationX.value = context.changeX + event.translationX
-      console.log(boundedTranslationX.value)
+      // console.log("Grip", boundedTranslationX.value)
+      // console.log("Window", visibleTrackRange.value)
+      // console.log(event)
+
+      if (event.translationX < 0) { //slide left
+      } else if (event.translationX > 0) { //slide left
+        // console.log(boundedTranslationX.value + 16)
+        // console.log("Window", visibleTrackRange.value)
+
+        if ((boundedTranslationX.value + gripWidth) > visibleTrackRange.value[1]) {
+          // console.log("GripScroll")
+          scrollTranslation.value = -(boundedTranslationX.value + gripWidth - dimensions.rootWidth)
+        }
+      }
+
     },
     onEnd: () => {
     }
